@@ -1,0 +1,3 @@
+# Title - Beautiful Places to visit based on Season
+## Idea Description
+This project is going to showcase all the wonderful and beautiful places based on the selected season. It enables the user to select the current season. Based on the selected season it is going to recommend all the beautiful and wonderful places that can be visited across the world in that particular season. It also enables to search the places based on their name and we can also see visual representation of the place and can also read a script about that particular place. It helps the user to select the place to visit without any doubt and confusion.
