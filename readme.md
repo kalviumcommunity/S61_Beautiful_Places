@@ -31,3 +31,29 @@ User Reviews and Ratings: Allow users to contribute their own reviews and rating
 Personalized Recommendations: Implement algorithms to provide personalized recommendations based on users' preferences, travel history, and interests, creating a more tailored and engaging user experience.
 
 ## Social Sharing: Enable users to share their favorite destinations and travel experiences with friends and followers on social media platforms, promoting the platform and inspiring others to explore new places.
+
+# Setting up locally
+
+To use the scripts defined in the package.json file:
+
+## Install Dependencies:
+
+Before running any scripts, make sure to install the project dependencies by running:
+
+npm install
+
+## Start the Application:
+
+To start the application locally, you can use:
+
+npm start
+
+This will run the application and make it accessible through your web browser.
+
+## Run Tests:
+
+If there are any tests defined in the project, you can run them using:
+
+npm test
+
+This will execute the test suite and provide feedback on the project's functionality.
