@@ -1,11 +1,31 @@
 {
-  "name": "s61_beautiful_places",
-  "version": "1.0.0",
-  "description": "The \"Beautiful Places to Visit Based on Season\" project is a platform designed to showcase a curated selection of wonderful and picturesque destinations around the world, tailored to the current season. Users can easily navigate through the interface to select their desired season, which will prompt the system to recommend stunning locations ideal for that time of year.",
-  "main": "index.js",
+  "name": "s61-beautiful-places",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.56",
+    "@types/react-dom": "^18.2.19",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "vite": "^5.1.4"
+  },
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "index.js",
+  "keywords": [],
   "author": "",
   "license": "ISC"
 }
