@@ -1,0 +1,11 @@
+{
+  "name": "s61_beautiful_places",
+  "version": "1.0.0",
+  "description": "The \"Beautiful Places to Visit Based on Season\" project is a platform designed to showcase a curated selection of wonderful and picturesque destinations around the world, tailored to the current season. Users can easily navigate through the interface to select their desired season, which will prompt the system to recommend stunning locations ideal for that time of year.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
