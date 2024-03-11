@@ -57,3 +57,5 @@ If there are any tests defined in the project, you can run them using:
 npm test
 
 This will execute the test suite and provide feedback on the project's functionality.
+
+## Deployed Link :  https://s61-beautiful-places.onrender.com
