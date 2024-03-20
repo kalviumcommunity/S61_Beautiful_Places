@@ -58,8 +58,9 @@ npm test
 
 This will execute the test suite and provide feedback on the project's functionality.
 
-## Deployed Link : https://s61-beautiful-places.onrender.com
+## Back-End Deployed Link :
+  https://s61-beautiful-places-2.onrender.com
 
-## Nelify Deployed Link:
+## Front-End Deployed Link:
 
 https://65f9472a1ff11f8ebcef4e0d--tourmaline-jelly-b408f7.netlify.app/
