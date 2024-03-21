@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       {/* <LandingPage /> */}
-      <Entity {...data} />
+      <Entity />
     </>
   )
 }

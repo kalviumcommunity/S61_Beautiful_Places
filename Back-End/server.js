@@ -7,12 +7,16 @@ const mongoose = require('mongoose');
 const connectDB = require('./Config/dbConn'); 
 const PlaceModel = require('./Schema'); 
 const placeRoute = require('./routes');
+const cors = require('cors')
 
 connectDB();
 
 const app = express();
 
 app.use(express.json());
+app.use(cors({
+    origin:'http://localhost:5174'
+}))
 
 // Routes
 app.get('/', (req, res) => {
@@ -41,7 +45,7 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something went wrong!');
 });
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3003;
 
 // Start the server
 app.listen(port, () => {
