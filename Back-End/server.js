@@ -14,9 +14,7 @@ connectDB();
 const app = express();
 
 app.use(express.json());
-app.use(cors({
-    origin:'http://localhost:5174'
-}))
+app.use(cors())
 
 // Routes
 app.get('/', (req, res) => {
@@ -34,18 +32,18 @@ app.get('/places', async (req, res) => {
         const places = await PlaceModel.find();
         res.json(places);
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Internal Server Error');
+        console.error('Error fetching places:',error);
+        res.status(500).json({error: 'Internal Server Error'});
     }
 });
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something went wrong!');
+    console.error('An error occurred:',err);
+    res.status(500).json({error:'Something went wrong!'});
 });
 
-const port = process.env.PORT || 3003;
+const port = process.env.PORT || 3002;
 
 // Start the server
 app.listen(port, () => {

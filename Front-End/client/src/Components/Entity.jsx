@@ -23,7 +23,7 @@ function Entity() {
 
   useEffect(() => {
     // Fetch entities from the server
-    axios.get('http://localhost:3002/api/read')
+    axios.get('http://localhost:3001/api/read')
       .then(response => {
         console.log(response.data)
         setEntities(response.data.data); // Set the entities in the state
