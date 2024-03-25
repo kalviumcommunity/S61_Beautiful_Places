@@ -14,7 +14,9 @@ connectDB();
 const app = express();
 
 app.use(express.json());
-app.use(cors())
+app.use(cors({
+    origin:'http://localhost:5173'
+}))
 
 // Routes
 app.get('/', (req, res) => {
@@ -43,7 +45,7 @@ app.use((err, req, res, next) => {
     res.status(500).json({error:'Something went wrong!'});
 });
 
-const port = process.env.PORT || 3002;
+const port = process.env.PORT || 3001;
 
 // Start the server
 app.listen(port, () => {
