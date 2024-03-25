@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import './CreatePlace.css';
 
 function CreatePlace() {
@@ -16,6 +17,7 @@ function CreatePlace() {
   const [keyFeatures, setKeyFeatures] = useState([]);
   const [totalAmountCollectionPerDay, setTotalAmountCollectionPerDay] =
     useState("");
+  const navigate = useNavigate()
 
   const Submit = (e) => {
     e.preventDefault();
@@ -32,7 +34,7 @@ function CreatePlace() {
     suitableWeather,
     keyFeatures,
     totalAmountCollectionPerDay})
-    .then(result => console.log(result))
+    .then(result => console.log(result,"created place"))
     .catch(err => console.log(err))
   }
 

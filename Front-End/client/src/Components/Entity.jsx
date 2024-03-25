@@ -2,6 +2,8 @@ import React from 'react';
 import './Entity.css'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import UpdatePlace from './UpdatePlace';
+import { Link } from 'react-router-dom';
 
 // function Entity(props) {
 //   return (
@@ -18,8 +20,9 @@ import axios from 'axios';
 //   );
 // }
 
-function Entity() {
+function Entity({handleUpdate}) {
   const [entities, setEntities] = useState([]);
+  const [entityToUpdate, setEntityToUpdate] = useState(null);
 
   useEffect(() => {
     // Fetch entities from the server
@@ -33,30 +36,64 @@ function Entity() {
       });
   }, []); // Empty dependency array ensures useEffect runs only once after component mount
 
+  const onDelete = (id) => {
+    axios.delete(`http://localhost:3001/api/delete/${id}`)
+    .then(response => {
+      console.log(response.data);
+      setEntities(entities.filter(entity => entity._id !== id));
+    })
+    .catch(error => {
+      console.log('Error deleting entity:', error);
+    })
+  }
+
+  const handleUpdateEntity = (id) => {
+    setEntityToUpdate(id);
+    const entityToUpdate = entities.find(entity => entity._id === id)
+    console.log('Details of entity to update:', entityToUpdate);
+  }
   return (
     <div>
-      <h1>All Entities</h1>
-      <ul>
-        {entities.map(entity => (
-          <li key={entity._id} className="entity-item">
-          <h2>{entity.placeName}</h2>
-          <p>Location: {entity.location}</p>
-          <p>Primary Attraction: {entity.primaryAttraction}</p>
-          <p>Description: {entity.description}</p>
-          <p>Average Rating: {entity.averageRating}</p>
-          <p>Visitor Count: {entity.visitorCount}</p>
-          <p>Nearby Accomodations:</p> 
+      {entityToUpdate ? ( // Render UpdatePlace component if entityToUpdate is not null
+        <UpdatePlace 
+            placeToUpdate={entities.find(entity => entity._id === entityToUpdate)}
+            handleUpdateEntity = {() => setEntityToUpdate(null)}
+             />
+      ) : (
+        <div>
+          <h1>All Entities</h1>
           <ul>
-            {entity.nearbyAccommodations.map((accommodation, index) => (
-              <li key={index}>{accommodation}</li>
+            {entities.map(entity => (
+              <li key={entity._id} className="entity-item">
+                <h2>{entity.placeName}</h2>
+                <p>Location: {entity.location}</p>
+                <p>Primary Attraction: {entity.primaryAttraction}</p>
+                <p>Description: {entity.description}</p>
+                <p>Average Rating: {entity.averageRating}</p>
+                <p>Visitor Count: {entity.visitorCount}</p>
+                <p>Nearby Accomodations:</p> 
+                <ul>
+                  {entity.nearbyAccommodations.map((accommodation, index) => (
+                    <li key={index}>{accommodation}</li>
+                  ))}
+                </ul>
+                <div className="button-container">
+                  {/* Update button */}
+                  <button className="update-button" onClick={() => handleUpdate(entity._id)}>
+                    <Link to='/update'>Update</Link>
+
+                  </button>
+                  {/* Delete button */}
+                  <button className="delete-button" onClick={() => onDelete(entity._id)}>Delete</button>
+                </div>
+              </li>
             ))}
           </ul>
-        </li>
-          
-        ))}
-      </ul>
+        </div>
+      )}
     </div>
   );
+
 }
 
 export default Entity;
