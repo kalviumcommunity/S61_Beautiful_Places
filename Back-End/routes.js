@@ -1,10 +1,28 @@
+const express = require('express');
+const Joi = require('joi');
 const {PlaceModel} = require("./Schema")
 const {Router} = require("express")
+const placeRoute = express.Router()
 
+// Define Joi schema for validation
+const placeValidationSchema = Joi.object({
+    placeName: Joi.string().required(),
+    location: Joi.string().required(),
+    primaryAttraction: Joi.string().required(),
+    yearOfEstablishment: Joi.string(),
+    description: Joi.string().required(),
+    averageRating: Joi.number().required(),
+    visitorCount: Joi.string().required(),
+    nearbyAccommodations: Joi.array().items(Joi.string()).required(),
+    nearbyRestaurants: Joi.array().items(Joi.string()).required(),
+    suitableWeather: Joi.string().required(),
+    keyFeatures: Joi.array().items(Joi.string()).required(),
+    totalAmountCollectionPerDay: Joi.string().required()
+})
 
-const placeRoute = Router()
+placeRoute.use(express.json());
 
-placeRoute.post("/create", async (req, res) => {
+placeRoute.post("/create", validatePlace ,async (req, res) => {
     // res.json({msg:"Data posted successfully..!!!"})
 try {
    const prod =  await PlaceModel.create(req.body)
@@ -59,5 +77,13 @@ placeRoute.delete("/delete/:id", async (req, res) => {
         res.status(500).json({ errMsg: "Invalid delete request", error });
     }
 });
+
+function validatePlace(req, res, next){
+    const {error} = placeValidationSchema.validate(req.body);
+    if(error){
+        return res.status(400).json({message: error.details[0].message});
+    }
+    next();
+}
 
 module.exports = placeRoute
