@@ -10,7 +10,7 @@ import UpdatePlace from './Components/UpdatePlace';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Login from './Components/Login';
-import Signup from './Components/Signup';
+import Logout from './Components/Logout';
 
 function App() {
   const [placeToUpdate, setPlaceToUpdate] =  useState(null)
@@ -48,11 +48,11 @@ function App() {
               <li className="nav-item">
                 <Link className="nav-link" to='/create'>Create Place</Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to='/login'>Login</Link>
+              <li className='nav-item'>
+                <Link className='nav-link' to='/login'>LogIn</Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to='/signup'>Signup</Link>
+              <li className='nav-item'>
+                <Link className='nav-link' to='/logout'>LogOut</Link>
               </li>
               {/* <li className="nav-item">
                 <Link className="nav-link" to='/update'>Update Place</Link>
@@ -67,8 +67,8 @@ function App() {
         <Route path='/entities' element={<Entity handleUpdate={handleUpdate} />} />
         <Route path='/create' element={<CreatePlace />} />
         <Route path='/update' element={<UpdatePlace placeToUpdate={placeToUpdate} />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<Signup />} />
+        <Route path='/login' element={<Login />}></Route>
+        <Route path='/logout' element={<Logout />}></Route>
       </Routes>
     </div>
   );
