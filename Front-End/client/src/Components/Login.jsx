@@ -18,7 +18,7 @@ function Login() {
       const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-          const response = await axios.post('http://localhost:3001/api/logout', { username:loginUser.username, password: loginUser.password });
+          const response = await axios.post('http://localhost:3001/api/login', { username:loginUser.username, password: loginUser.password });
           console.log("response",response);
           if (response.status === 200) {
             console.log(response.data);
