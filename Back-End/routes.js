@@ -22,6 +22,19 @@ const placeValidationSchema = Joi.object({
 
 placeRoute.use(express.json());
 
+// Authentication endpoint - Login
+placeRoute.post('/login', (req, res) => {
+    const {username, password} = req.body;
+    res.cookie('username', username, {maxAge:150, httpOnly:true});
+    res.json({message: 'Login successful', username})
+})
+
+// Authentication endpoint - Logout
+placeRoute.post('/logout', (req,res) => {
+    res.clearCookie('username');
+    res.json({message: 'Logout successful'});
+})
+
 placeRoute.post("/create", validatePlace ,async (req, res) => {
     // res.json({msg:"Data posted successfully..!!!"})
 try {
