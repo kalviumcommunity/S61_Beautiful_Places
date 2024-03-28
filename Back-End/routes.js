@@ -4,6 +4,7 @@ const {PlaceModel} = require("./Schema")
 const {Router} = require("express")
 const placeRoute = express.Router()
 const {UserModel} = require('./UserSchema');
+const jwt = require('jsonwebtoken');
 
 
 // Define Joi schema for validation
@@ -24,7 +25,7 @@ const placeValidationSchema = Joi.object({
 
 placeRoute.use(express.json());
 
-router.post('/login', async (req, res) => {
+placeRoute.post('/login', async (req, res) => {
     try {
         const { username, password } = req.body;
         const user = await UserModel.findOne({ username, password });
@@ -33,8 +34,10 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ error: 'Invalid username or password' });
         }
 
+        const token = jwt.sign({username}, process.env.JWT_SECRET, {expiresIn:'1h'});
+
         // Set username in cookie
-        res.cookie('username', username, { httpOnly: true });
+        res.cookie('token',token, { httpOnly: true });
         res.status(200).json({ message: 'Login successful', user });
     } catch (err) {
         console.error('Error logging in:', err);
@@ -43,7 +46,7 @@ router.post('/login', async (req, res) => {
 });
 
 // Logout endpoint
-router.post('/logout', (req, res) => {
+placeRoute.post('/logout', (req, res) => {
     // Clear username cookie
     res.clearCookie('username');
     res.status(200).json({ message: 'Logout successful' });
@@ -73,7 +76,6 @@ placeRoute.get("/read", async (req, res) => {
 
 // update a place
 placeRoute.put("/update/:id", async (req, res) => {
-    // res.json({msg:"put request successful"})
     try {
         const { id } = req.params;
     
