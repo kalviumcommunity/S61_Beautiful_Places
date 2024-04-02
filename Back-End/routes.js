@@ -3,7 +3,7 @@ const Joi = require('joi');
 const {PlaceModel} = require("./Schema")
 const {Router} = require("express")
 const placeRoute = express.Router()
-const {UserModel} = require('./UserSchema');
+const UserModel = require('./UserSchema');
 const jwt = require('jsonwebtoken');
 
 
@@ -34,10 +34,10 @@ placeRoute.post('/login', async (req, res) => {
             return res.status(401).json({ error: 'Invalid username or password' });
         }
 
-        const token = jwt.sign({username}, process.env.JWT_SECRET, {expiresIn:'1h'});
+        const token = jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn:'1h' });
 
-        // Set username in cookie
-        res.cookie('token',token, { httpOnly: true });
+        // Set token in cookie
+        res.cookie('token', token, { httpOnly: true });
         res.status(200).json({ message: 'Login successful', user });
     } catch (err) {
         console.error('Error logging in:', err);
@@ -55,9 +55,14 @@ placeRoute.post('/logout', (req, res) => {
 placeRoute.post("/create", validatePlace ,async (req, res) => {
     // res.json({msg:"Data posted successfully..!!!"})
 try {
-   const prod =  await PlaceModel.create(req.body)
+    const placeData = {
+        ...req.body,
+        created_by: req.user._id
+    }
+   const prod =  await PlaceModel.create(placeData)
    const {_id} = prod;
   res.status(200).send({msg: "Data created successfully", prod,_id})   
+  res.status(201).json({ message: 'Place created successfully', place });
 } catch (error) {
     res.status(500).json({errMsg:"Invalid post request", error})
 }
@@ -71,6 +76,16 @@ placeRoute.get("/read", async (req, res) => {
         res.status(200).send({msg:"Data received",data})
     } catch (error) {
         res.status(500).json({errMsg:"Invalid get request", error})
+    }
+})
+
+placeRoute.get('/api/entities', async (req, res) => {
+    try{
+        const entities = await PlaceModel.find();
+        res.status(200).json({data: entities});
+    }catch(error){
+        console.error('Error fetching entities', error);
+        res.status(500).json({error: 'Internal Server Error'});
     }
 })
 
