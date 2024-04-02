@@ -11,6 +11,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Login from './Components/Login';
 import Logout from './Components/Logout';
+import Register from './Components/Register';
 
 function App() {
   const [placeToUpdate, setPlaceToUpdate] =  useState(null)
@@ -54,6 +55,9 @@ function App() {
               <li className='nav-item'>
                 <Link className='nav-link' to='/logout'>LogOut</Link>
               </li>
+              <li className='nav-item'> {/* Step 2: Add a new nav item for Register */}
+                <Link className='nav-link' to='/register'>Register</Link>
+              </li>
               {/* <li className="nav-item">
                 <Link className="nav-link" to='/update'>Update Place</Link>
               </li> */}
@@ -69,6 +73,7 @@ function App() {
         <Route path='/update' element={<UpdatePlace placeToUpdate={placeToUpdate} />} />
         <Route path='/login' element={<Login />}></Route>
         <Route path='/logout' element={<Logout />}></Route>
+        <Route path='/register' element={<Register />} /> 
       </Routes>
     </div>
   );
