@@ -128,31 +128,23 @@ function Entity({ handleUpdate }) {
       })
       .catch(error => {
         console.log('Error fetching users:', error);
-      })
-  },[])
+      });
+  }, []);
 
   useEffect(() => {
-    // Fetch entities based on selected user if a user is selected
-    if (selectedUser && selectedUser !=='AllUsers') {
-      axios.get(`http://localhost:3001/api/entities/${selectedUser}`)
-        .then(response => {
-          setEntities(response.data.data);
-        })
-        .catch(error => {
-          console.log('Error fetching entities:', error);
-        });
-    } else {
-      // Fetch all entities if no user is selected
-      axios.get('http://localhost:3001/api/read')
-        .then(response => {
-          console.log(response.data);
-          setEntities(response.data.data);
-        })
-        .catch(error => {
-          console.log('Error fetching entities:', error);
-        });
-    }
-  }, [selectedUser]);
+    // Fetch all entities
+    axios.get('http://localhost:3001/api/read')
+      .then(response => {
+        console.log(response.data);
+        setEntities(response.data.data.map(entity => ({
+          ...entity,
+          createdBy: entity.createdBy || 'Unknown' // Set createdBy to 'Unknown' if it's not defined
+        })));
+      })
+      .catch(error => {
+        console.log('Error fetching entities:', error);
+      });
+  }, []);
 
   const onDelete = (id) => {
     axios.delete(`http://localhost:3001/api/delete/${id}`)
@@ -162,34 +154,29 @@ function Entity({ handleUpdate }) {
       })
       .catch(error => {
         console.log('Error deleting entity:', error);
-      })
-  }
+      });
+  };
 
   const handleUpdateEntity = (id) => {
     setEntityToUpdate(id);
-    const entityToUpdate = entities.find(entity => entity._id === id)
+    const entityToUpdate = entities.find(entity => entity._id === id);
     console.log('Details of entity to update:', entityToUpdate);
-  }
+  };
 
   return (
     <div>
       <select value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
         <option value="AllUsers">All Users</option>
         {users.map(user => (
-          <option key={user._id} value={user._id}>{user.username}</option>
+          <option key={user._id} value={user.username}>{user.username}</option>
         ))}
       </select>
 
-      {entityToUpdate ? (
-        <UpdatePlace 
-          placeToUpdate={entities.find(entity => entity._id === entityToUpdate)}
-          handleUpdateEntity={() => setEntityToUpdate(null)}
-        />
-      ) : (
-        <div>
-          <h1>All Entities</h1>
-          <ul>
-            {entities.map(entity => (
+      <div>
+        <h1>All Entities</h1>
+        <ul>
+          {selectedUser === 'AllUsers' ?
+            entities.map(entity => (
               <li key={entity._id} className="entity-item">
                 <h2>{entity.placeName}</h2>
                 <p>Location: {entity.location}</p>
@@ -210,12 +197,38 @@ function Entity({ handleUpdate }) {
                   <button className="delete-button" onClick={() => onDelete(entity._id)}>Delete</button>
                 </div>
               </li>
-            ))}
-          </ul>
-        </div>
-      )}
+            )) :
+            entities
+              .filter(entity => entity.createdBy === selectedUser)
+              .map(entity => (
+                <li key={entity._id} className="entity-item">
+                  <h2>{entity.placeName}</h2>
+                  <p>Location: {entity.location}</p>
+                  <p>Primary Attraction: {entity.primaryAttraction}</p>
+                  <p>Description: {entity.description}</p>
+                  <p>Average Rating: {entity.averageRating}</p>
+                  <p>Visitor Count: {entity.visitorCount}</p>
+                  <p>Nearby Accommodations:</p> 
+                  <ul>
+                    {entity.nearbyAccommodations.map((accommodation, index) => (
+                      <li key={index}>{accommodation}</li>
+                    ))}
+                  </ul>
+                  <div className="button-container">
+                    <button className="update-button" onClick={() => handleUpdateEntity(entity._id)}>
+                      <Link to='/update'>Update</Link>
+                    </button>
+                    <button className="delete-button" onClick={() => onDelete(entity._id)}>Delete</button>
+                  </div>
+                </li>
+              ))
+          }
+        </ul>
+      </div>
     </div>
   );
 }
 
 export default Entity;
+
+
