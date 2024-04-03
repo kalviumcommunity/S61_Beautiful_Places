@@ -49,10 +49,11 @@ const placeSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
-    created_by: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true
+    createdBy: {
+      // type: mongoose.Schema.Types.ObjectId,
+      // ref: 'User',
+      // required: true
+      type: String
     }
   });
 

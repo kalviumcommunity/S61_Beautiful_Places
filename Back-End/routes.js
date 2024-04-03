@@ -5,6 +5,7 @@ const {Router} = require("express")
 const placeRoute = express.Router()
 const UserModel = require('./UserSchema');
 const jwt = require('jsonwebtoken');
+const authMiddleware = require('./authMiddleware')
 
 
 // Define Joi schema for validation
@@ -20,7 +21,8 @@ const placeValidationSchema = Joi.object({
     nearbyRestaurants: Joi.array().items(Joi.string()).required(),
     suitableWeather: Joi.string().required(),
     keyFeatures: Joi.array().items(Joi.string()).required(),
-    totalAmountCollectionPerDay: Joi.string().required()
+    totalAmountCollectionPerDay: Joi.string().required(),
+    createdBy: Joi.string().required()
 })
 
 placeRoute.use(express.json());
@@ -52,21 +54,45 @@ placeRoute.post('/logout', (req, res) => {
     res.status(200).json({ message: 'Logout successful' });
 });
 
-placeRoute.post("/create", validatePlace ,async (req, res) => {
-    // res.json({msg:"Data posted successfully..!!!"})
-try {
-    const placeData = {
-        ...req.body,
-        created_by: req.user._id
+// placeRoute.post("/create", validatePlace ,async (req, res) => {
+//     // res.json({msg:"Data posted successfully..!!!"})
+// try {
+//     const placeData = {
+//         ...req.body,
+//         created_by: req.user._id
+//     }
+//    const prod =  await PlaceModel.create(placeData)
+//    const {_id} = prod;
+//   res.status(200).send({msg: "Data created successfully", prod,_id})   
+//   res.status(201).json({ message: 'Place created successfully', place });
+// } catch (error) {
+//     res.status(500).json({errMsg:"Invalid post request", error})
+// }
+// })
+// Create place endpoint
+// placeRoute.post("/create", authMiddleware, async (req, res) => {
+//     try {
+//         const newPlace = await PlaceModel.create({
+//             // Other properties...
+//             created_by: req.user._id // Assigning the ID of the authenticated user to created_by
+//         });
+
+//         res.status(201).json({ message: "Place created successfully", newPlace });
+//     } catch (error) {
+//         console.error("Error creating place:", error);
+//         res.status(500).json({ error: "Internal server error" });
+//     }
+// });
+
+placeRoute.post('/create', async (req, res) => {
+    try {
+        const newPlace = await PlaceModel.create(req.body);
+        res.status(201).json({ message: "Place created successfully", newPlace });
+    } catch (error) {
+        console.error("Error creating place:", error);
+        res.status(500).json({ error: "Internal server error" });
     }
-   const prod =  await PlaceModel.create(placeData)
-   const {_id} = prod;
-  res.status(200).send({msg: "Data created successfully", prod,_id})   
-  res.status(201).json({ message: 'Place created successfully', place });
-} catch (error) {
-    res.status(500).json({errMsg:"Invalid post request", error})
-}
-})
+});
 
 
 placeRoute.get("/read", async (req, res) => {
@@ -79,7 +105,7 @@ placeRoute.get("/read", async (req, res) => {
     }
 })
 
-placeRoute.get('/api/entities', async (req, res) => {
+placeRoute.get('/entities', async (req, res) => {
     try{
         const entities = await PlaceModel.find();
         res.status(200).json({data: entities});
