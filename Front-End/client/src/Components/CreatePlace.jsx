@@ -81,7 +81,7 @@ function CreatePlace() {
     })
       .then(result => {
         console.log(result, "created place");
-        // navigate('/')
+        navigate('/')
       })
       .catch(err => console.log(err))
   }
