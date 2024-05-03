@@ -5,7 +5,7 @@ import UpdatePlace from './UpdatePlace';
 
 function Entity({ handleUpdate }) {
   const [entities, setEntities] = useState([]);
-  const [entityToUpdate, setEntityToUpdate] = useState(null);
+  // const [entityToUpdate, setEntityToUpdate] = useState(null);
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState('');
 
@@ -47,8 +47,9 @@ function Entity({ handleUpdate }) {
   };
 
   const handleUpdateEntity = (id) => {
-    setEntityToUpdate(id);
+    // setEntityToUpdate(id);
     const entityToUpdate = entities.find(entity => entity._id === id);
+    handleUpdate(entityToUpdate);
     console.log('Details of entity to update:', entityToUpdate);
   };
 

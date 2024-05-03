@@ -3,11 +3,12 @@ import axios from "axios";
 import './UpdatePlace.css'
 
 function UpdatePlace({placeToUpdate}) {
-  const [formData, setFormData] = useState(placeToUpdate)
+  console.log("placeToUpdate",placeToUpdate);
+  const [formData, setFormData] = useState(placeToUpdate||{})
   useEffect(() => {
-    // if(placeToUpdate){
-      setFormData({...placeToUpdate});
-    // }
+    if(placeToUpdate){
+      setFormData({placeToUpdate});
+    }
   },[placeToUpdate])
 
   const handleChange = (e) => {
@@ -30,6 +31,7 @@ function UpdatePlace({placeToUpdate}) {
         // Add logic to handle error (e.g., show error message)
       });
   };
+  console.log("formData", formData)
   return(
     <div className="update-place-container">
       <div>
@@ -42,7 +44,7 @@ function UpdatePlace({placeToUpdate}) {
               id="placeName"
               placeholder="Enter Place Name"
               className="form-control"
-              value={formData.placeName || ' '}
+              value={formData.placeName}
               // value={formData.placeName || ''}
               // value={placeToUpdate.placeName}
               onChange={handleChange}
@@ -56,7 +58,7 @@ function UpdatePlace({placeToUpdate}) {
               id="location"
               placeholder="Enter Location"
               className="form-control"
-              value={formData.location || ''}
+              value={formData.location}
               onChange={(e) => setFormData({ ...formData, location: e.target.value })} 
             />
           </div>
@@ -67,7 +69,7 @@ function UpdatePlace({placeToUpdate}) {
               id="primaryAttraction"
               placeholder="Enter Primary Attraction"
               className="form-control"
-              value={formData.primaryAttraction || ''}
+              value={formData.primaryAttraction}
               onChange={(e) => setFormData({ ...formData, primaryAttraction: e.target.value })} 
             />
           </div>
@@ -78,7 +80,7 @@ function UpdatePlace({placeToUpdate}) {
               id="yearOfEstablishment"
               placeholder="Enter Year of Establishment"
               className="form-control"
-              value={formData.yearOfEstablishment || ''}
+              value={formData.yearOfEstablishment}
               onChange={(e) => setFormData({ ...formData, yearOfEstablishment: e.target.value })} 
             />
           </div>
@@ -88,7 +90,7 @@ function UpdatePlace({placeToUpdate}) {
               id="description"
               placeholder="Enter Description"
               className="form-control"
-              value={formData.description || ''}
+              value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })} 
             ></textarea>
           </div>
@@ -99,7 +101,7 @@ function UpdatePlace({placeToUpdate}) {
               id="averageRating"
               placeholder="Enter Average Rating"
               className="form-control"
-              value={formData.averageRating || ''}
+              value={formData.averageRating}
               onChange={(e) => setFormData({ ...formData, averageRating: e.target.value })} 
             />
           </div>
@@ -110,7 +112,7 @@ function UpdatePlace({placeToUpdate}) {
               id="visitorCount"
               placeholder="Enter Visitor Count"
               className="form-control"
-              value={formData.visitorCount || ''}
+              value={formData.visitorCount}
               onChange={(e) => setFormData({ ...formData, visitorCount: e.target.value })} 
             />
           </div>
@@ -121,7 +123,7 @@ function UpdatePlace({placeToUpdate}) {
               id="nearbyAccommodations"
               placeholder="Enter Nearby Accommodations"
               className="form-control"
-              value={formData.nearbyAccommodations || ''}
+              value={formData.nearbyAccommodations}
               onChange={(e) => setFormData({ ...formData, nearbyAccommodations: e.target.value })} 
             />
           </div>
@@ -132,7 +134,7 @@ function UpdatePlace({placeToUpdate}) {
               id="nearbyRestaurants"
               placeholder="Enter Nearby Restaurants"
               className="form-control"
-              value={formData.nearbyRestaurants || ''}
+              value={formData.nearbyRestaurants}
               onChange={(e) => setFormData({ ...formData, nearbyRestaurants: e.target.value })} 
             />
           </div>
@@ -143,7 +145,7 @@ function UpdatePlace({placeToUpdate}) {
               id="suitableWeather"
               placeholder="Enter Suitable Weather"
               className="form-control"
-              value={formData.suitableWeather || ''}
+              value={formData.suitableWeather}
               onChange={(e) => setFormData({ ...formData, suitableWeather: e.target.value })} 
             />
           </div>
@@ -154,7 +156,7 @@ function UpdatePlace({placeToUpdate}) {
               id="keyFeatures"
               placeholder="Enter Key Features"
               className="form-control"
-              value={formData.keyFeatures || ''}
+              value={formData.keyFeatures}
               onChange={(e) => setFormData({ ...formData, keyFeatures: e.target.value })} 
             />
           </div>
@@ -165,7 +167,7 @@ function UpdatePlace({placeToUpdate}) {
               id="totalAmountCollectionPerDay"
               placeholder="Enter Total Amount Collection Per Day"
               className="form-control"
-              value={formData.totalAmountCollectionPerDay || ''}
+              value={formData.totalAmountCollectionPerDay}
               onChange={(e) => setFormData({ ...formData, totalAmountCollectionPerDay: e.target.value })} 
             />
           </div>
