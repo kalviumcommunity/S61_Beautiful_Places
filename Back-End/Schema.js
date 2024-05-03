@@ -49,6 +49,9 @@ const placeSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
+    createdBy: {
+      type: String
+    }
   });
 
 const PlaceModel = mongoose.model("Place", placeSchema);

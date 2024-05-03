@@ -33,5 +33,41 @@
   .entity-item ul li {
     color: #666; /* Medium gray text for list items */
   }
-  
+ /* CSS Styles */
+.button-container {
+  margin-top: 10px;
+  display: flex;
+}
+
+.button-container button{
+  width: 200px;
+}
+
+.update-button,
+.delete-button {
+  padding: 8px 16px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.update-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.update-button:hover {
+  background-color: #45a049;
+}
+
+.delete-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #d32f2f;
+}
+ 
   
